@@ -1,10 +1,9 @@
 # Exercise 1
 
-## 1.1 
-makefile依次构造所依赖的文件，最后链接为ucore.img
+* 1.1 makefile builds a file based on the file it depends on. A file is build when all its dependencies have been built.
+After all the source files have been built, the makefile links them into the final ucore.img
 
-## 1.2
-512个字节的扇区，要求最后两个字节为0x55AA
+* 1.2 The last two bytes of the 512B sector must be 0x55AA
 
 # Exercise 2
 
@@ -58,4 +57,65 @@ gdtdesc:
     movl %cr0, %eax
     orl $CR0_PE_ON, %eax
     movl %eax, %cr0
+```
+
+# Exercise 4
+
++ To read a sector from disk, the bootloader perform the following actions
+    1. wait for the disk to be ready
+    2. send read commands
+    3. wait for the disk to complete the operation
+    4. fetch the results
+    
+This is accomplished by the following code snippet
+
+``` c
+/* readsect - read a single sector at @secno into @dst */
+static void
+readsect(void *dst, uint32_t secno) {
+    // wait for disk to be ready
+    waitdisk();
+
+    outb(0x1F2, 1);                         // count = 1
+    outb(0x1F3, secno & 0xFF);
+    outb(0x1F4, (secno >> 8) & 0xFF);
+    outb(0x1F5, (secno >> 16) & 0xFF);
+    outb(0x1F6, ((secno >> 24) & 0xF) | 0xE0);
+    outb(0x1F7, 0x20);                      // cmd 0x20 - read sectors
+
+    // wait for disk to be ready
+    waitdisk();
+
+    // read a sector
+    insl(0x1F0, dst, SECTSIZE / 4);
+}
+```
++ To read an ELF file the bootloader first reads in the head of the ELF, and checks it validity
+
+``` c
+    // read the 1st page off disk
+    readseg((uintptr_t)ELFHDR, SECTSIZE * 8, 0);
+
+    // is this a valid ELF?
+    if (ELFHDR->e_magic != ELF_MAGIC) {
+        goto bad;
+    }
+```
+
+then information about where in the memory the content of the ELF file should be loaded is extracted. The contents are read
+and loaded to that location
+``` c
+    struct proghdr *ph, *eph;
+
+    // load each program segment (ignores ph flags)
+    ph = (struct proghdr *)((uintptr_t)ELFHDR + ELFHDR->e_phoff);
+    eph = ph + ELFHDR->e_phnum;
+    for (; ph < eph; ph ++) {
+        readseg(ph->p_va & 0xFFFFFF, ph->p_memsz, ph->p_offset);
+    }
+```
+
+Finally the program jumps to the entry point as indicated by the ELF header
+``` c
+    ((void (*)(void))(ELFHDR->e_entry & 0xFFFFFF))();
 ```
