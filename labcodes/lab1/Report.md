@@ -119,3 +119,33 @@ Finally the program jumps to the entry point as indicated by the ELF header
 ``` c
     ((void (*)(void))(ELFHDR->e_entry & 0xFFFFFF))();
 ```
+
+# Exercise 5
+
+The only change is the addition of the following code snippet
+``` c
+    int i, j;
+    uint32_t ebp = read_ebp();
+    uint32_t eip = read_eip();
+
+    for (i = 0; i < STACKFRAME_DEPTH; i++) {
+        cprintf("ebp:0x%08x eip:0x%08x args:", ebp, eip);
+        uint32_t *args = (uint32_t *)ebp + 2;
+        for (j = 0; j < 4; j ++) {
+            cprintf("0x%08x ", args[j]);
+        }
+        cprintf("\n");
+        print_debuginfo(eip - 1);
+        ebp = *((uint32_t *)ebp);
+        eip = *((uint32_t *)ebp + 1);
+        if (ebp == 0)
+        	break;
+    }
+```
+
+The last line is
+``` ebp:0x00007bf8 eip:0x00007c4f args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8 ```
++ eip points to 0x7c4f, which is the address of bootmain
++ ebp points to 0x7bf8, which is the previous stack pointer position
+
+# Exercise 6
