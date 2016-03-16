@@ -152,6 +152,7 @@ The last line is
 
 1. Each entry uses 8 bytes, byte 2-3 select the segment, and byte 0-1 and 6-7 specify the offset
 2. We add the following code snippet to fill up the IDT table
+
 ``` c
     int i;
     extern uintptr_t __vectors[];
