@@ -149,3 +149,24 @@ The last line is
 + ebp points to 0x7bf8, which is the previous stack pointer position
 
 # Exercise 6
+
+1. Each entry uses 8 bytes, byte 2-3 select the segment, and byte 0-1 and 6-7 specify the offset
+2. We add the following code snippet to fill up the IDT table
+``` c
+    int i;
+    extern uintptr_t __vectors[];
+
+    for (i = 0; i < sizeof(idt) / sizeof(struct gatedesc); i++) {
+        SETGATE(idt[i], 0, GD_KTEXT, __vectors[i], DPL_KERNEL);
+    }
+    SETGATE(idt[T_SWITCH_TOK], 0, GD_KTEXT, __vectors[T_SWITCH_TOK], DPL_USER);
+    lidt(&idt_pd);
+```
+
+3. Add the following to handle timer interrupts
+
+``` c
+    if (++ticks % TICK_NUM == 0) {
+    	print_ticks();
+    }
+```
