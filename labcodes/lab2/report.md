@@ -1,3 +1,4 @@
+# Task 1
 The change to default_pmm.c is very simple, 
 all that needs to be done is to insert the freed block in the right order sorted by address, 
 and this is accomplished by the following snippet of code
@@ -25,4 +26,34 @@ and this is accomplished by the following snippet of code
     }
     nr_free += n;	
 	list_add_after(insert_loc, &(base->page_link));
+```
+
+# Task 2
+This is accomplished by adding the following snippet of code in ```get_pte```
+```
+    pde_t *pdep = &pgdir[PDX(la)];			// (1) find page directory entry
+    if (!(*pdep & PTE_P)) {				// (2) check if entry is not present
+        struct Page *page = alloc_page();		// (3) check if creating is needed, then alloc page for page table
+        if (page == NULL) {
+            return NULL;
+        }
+        set_page_ref(page, 1);				// (4) set page reference
+        uintptr_t pa = page2pa(page);			// (5) get linear address of page
+        memset(KADDR(pa), 0, PGSIZE);			// (6) clear page content using memset
+        *pdep = pa | PTE_U | PTE_W | PTE_P;		// (7) set page directory entry's permission
+    }
+    return &((pte_t *)KADDR(PDE_ADDR(*pdep)))[PTX(la)];		// (8) return page table entry
+```
+
+# Task 3
+This is accomplished by adding the following snippet of code in ```page_remove_pte```
+```
+    if (*ptep & PTE_P) {				//(1) check if this page table entry is present
+        struct Page *page = pte2page(*ptep);		//(2) find corresponding page to pte
+        if (page_ref_dec(page) == 0) {			//(3) decrease page reference
+            free_page(page);				//(4) and free this page when page reference reachs 0
+        }
+        *ptep = 0;					//(5) clear second page table entry
+        tlb_invalidate(pgdir, la);			//(6) flush tlb
+    }
 ```
