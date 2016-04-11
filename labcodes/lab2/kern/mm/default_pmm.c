@@ -123,7 +123,9 @@ default_free_pages(struct Page *base, size_t n) {
     }
     base->property = n;
     SetPageProperty(base);
+	
     list_entry_t *le = list_next(&free_list);
+	list_entry_t *insert_loc = &free_list;
     while (le != &free_list) {
         p = le2page(le, page_link);
         le = list_next(le);
@@ -137,14 +139,14 @@ default_free_pages(struct Page *base, size_t n) {
             ClearPageProperty(base);
             base = p;
             list_del(&(p->page_link));
-        }
+        } 
+		else if ((unsigned int)p < (unsigned int)base) {
+			cprintf("Here");
+			insert_loc = &(p->page_link);
+		}
     }
-    nr_free += n;
-	
-    cprintf("before free ");
-	print_free_list();
-	list_add_after(list_prev(&free_list), &(base->page_link));
-	print_free_list();
+    nr_free += n;	
+	list_add_after(insert_loc, &(base->page_link));
 }
 
 void print_free_list(void) {
