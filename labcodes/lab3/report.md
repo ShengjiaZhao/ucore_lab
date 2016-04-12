@@ -1,6 +1,6 @@
 # Task 1
 
-
+This task is accomplished by finding the corresponding page table entry and allocate a page in case it does not yet exist
 ```
     ptep = get_pte(mm->pgdir, addr, 1);     //(1) try to find a pte, if pte's PT(Page Table) isn't existed, then create a PT.
     if (ptep == NULL) {
@@ -30,18 +30,13 @@ and when a "victim" needs to be swapped out, the front element of the queue is s
 
 The following code is used to perform swapping
 ```
-    if(swap_init_ok) {
-        struct Page *page=NULL;
-        if ((ret = swap_in(mm, addr, &page)) != 0) {
-            cprintf("swap_in in do_pgfault failed\n");
-            goto failed;
-        }    
-        page_insert(mm->pgdir, page, addr, perm);
-        swap_map_swappable(mm, addr, page, 1);
-        page->pra_vaddr = addr;
-    }
-    else {
-        cprintf("no swap_init_ok but ptep is %x, failed\n",*ptep);
-        goto failed;
-    }
+	struct Page *page = NULL;
+	ret = swap_in(mm, addr, &page);
+	if (ret != 0) {
+		cprintf("swap in failed\n");
+		goto failed;
+	}
+	page_insert(mm->pgdir, page, addr, perm);
+	swap_map_swappable(mm, addr, page, 1);
+	page->pra_vaddr = addr;
 ```
