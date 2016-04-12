@@ -42,8 +42,14 @@ schedule(void) {
         if (next == NULL || next->state != PROC_RUNNABLE) {
             next = idleproc;
         }
+		if (current->name[0] == 's' && current->name[1] == 'p') {
+			cprintf("SPOC: process is giving up CPU\n");
+		}
         next->runs ++;
         if (next != current) {
+			if (next->name[0] == 's' && next->name[1] == 'p') {
+				cprintf("SPOC: process is scheduled to run\n");
+			}
             proc_run(next);
         }
     }

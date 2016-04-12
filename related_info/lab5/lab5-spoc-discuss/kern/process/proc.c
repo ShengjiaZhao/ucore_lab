@@ -447,6 +447,8 @@ bad_fork_cleanup_proc:
 //   3. call scheduler to switch to other process
 int
 do_exit(int error_code) {
+	if (current->name[0] == 's' && current->name[1] == 'p')
+		cprintf("SPOC: process is exiting\n");
     if (current == idleproc) {
         panic("idleproc exit.\n");
     }
@@ -841,7 +843,7 @@ init_main(void *arg) {
 }
 
 int spoc_fun(void *arg) {
-	cprintf("SPOC: Running kernel thread and using syscall to execute as user process");
+	cprintf("SPOC: Running kernel thread and using syscall to execute as user process\n");
 	extern unsigned char _binary_obj___user_exit_out_start[], _binary_obj___user_exit_out_size[]; 
 	kernel_execve("spoc", _binary_obj___user_exit_out_start,
 				  (size_t)_binary_obj___user_exit_out_size);  
