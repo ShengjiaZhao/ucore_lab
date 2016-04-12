@@ -19,7 +19,7 @@ and in ```proc_init```
 ```
 
 * The result of printing is (Items starting with SPOC are prints related to process state
-
+```
 SPOC: Creating new kernel thread
 ide 0:      10000(sectors), 'QEMU HARDDISK'.
 ide 1:     262144(sectors), 'QEMU HARDDISK'.
@@ -82,4 +82,4 @@ exit pass.
 SPOC: process is exiting
 SPOC: process is giving up CPU
 
-
+```
