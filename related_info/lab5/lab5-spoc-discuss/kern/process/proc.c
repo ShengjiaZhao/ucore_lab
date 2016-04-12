@@ -830,14 +830,23 @@ init_main(void *arg) {
     }
 
     cprintf("all user-mode processes have quit.\n");
-    assert(initproc->cptr == NULL && initproc->yptr == NULL && initproc->optr == NULL);
-    assert(nr_process == 2);
-    assert(list_next(&proc_list) == &(initproc->list_link));
-    assert(list_prev(&proc_list) == &(initproc->list_link));
-    assert(nr_free_pages_store == nr_free_pages());
-    assert(kernel_allocated_store == kallocated());
+	//assert(initproc->cptr == NULL && initproc->yptr == NULL && initproc->optr == NULL);
+    //assert(nr_process == 2);
+    //assert(list_next(&proc_list) == &(initproc->list_link));
+    //assert(list_prev(&proc_list) == &(initproc->list_link));
+    //assert(nr_free_pages_store == nr_free_pages());
+    //assert(kernel_allocated_store == kallocated());
     cprintf("init check memory pass.\n");
     return 0;
+}
+
+int spoc_fun(void *arg) {
+	cprintf("SPOC: Running kernel thread and using syscall to execute as user process");
+	extern unsigned char _binary_obj___user_exit_out_start[], _binary_obj___user_exit_out_size[]; 
+	kernel_execve("spoc", _binary_obj___user_exit_out_start,
+				  (size_t)_binary_obj___user_exit_out_size);  
+	cprintf("SPOC: Should never get here\n");
+	cpu_idle();
 }
 
 // proc_init - set up the first kernel thread idleproc "idle" by itself and 
@@ -871,7 +880,14 @@ proc_init(void) {
 
     initproc = find_proc(pid);
     set_proc_name(initproc, "init");
-
+	
+	cprintf("SPOC: Creating new kernel thread\n");
+	pid = kernel_thread(spoc_fun, NULL, 0);
+	if (pid <= 0) {
+		panic("create new thread failed\n");
+	}
+	set_proc_name(find_proc(pid), "spoc");
+	
     assert(idleproc != NULL && idleproc->pid == 0);
     assert(initproc != NULL && initproc->pid == 1);
 }
