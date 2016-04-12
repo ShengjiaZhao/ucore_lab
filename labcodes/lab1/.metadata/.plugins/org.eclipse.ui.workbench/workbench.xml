@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="24" version="2.0">
+<workbench progressCount="19" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="74" y="30">
 <fastViewData fastViewLocation="1024"/>
@@ -15,14 +15,14 @@
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="156" y="30"/>
 <coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="40" y="30"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="88" y="30"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="96" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="68" y="30"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="232" y="30"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.cdt.make.editor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.cdt.make.editor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.cdt.ui.editor.asm.AsmEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.cdt.ui.editor.CEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.cdt.ui.editor.CEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -34,6 +34,16 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
+<part id="7"/>
+<part id="8"/>
+<part id="9"/>
+<part id="10"/>
+<part id="11"/>
 </presentation>
 </folder>
 </info>
@@ -42,26 +52,58 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/debug/kdebug.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="11748" selectionTopPixel="5402"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="trap.c" partName="trap.c" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/trap/trap.c" title="trap.c" tooltip="lab1/kern/trap/trap.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/trap/trap.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="91" selectionOffset="5249" selectionTopPixel="2883"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="vmm.c" partName="vmm.c" title="vmm.c" tooltip="/home/shengjia/ucore/ucore_os_lab/labcodes_answer/lab3_result/kern/mm/vmm.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/home/shengjia/ucore/ucore_os_lab/labcodes_answer/lab3_result/kern/mm/vmm.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="14830" selectionTopPixel="1660"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="bootmain.c" partName="bootmain.c" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/boot/bootmain.c" title="bootmain.c" tooltip="lab1/boot/bootmain.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/boot/bootmain.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="1132"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="bootasm.S" partName="bootasm.S" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/boot/bootasm.S" title="bootasm.S" tooltip="lab1/boot/bootasm.S" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/boot/bootasm.S"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="asm.h" partName="asm.h" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/boot/asm.h" title="asm.h" tooltip="lab1/boot/asm.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/boot/asm.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="268" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.make.editor" name="Makefile" partName="Makefile" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/Makefile" title="Makefile" tooltip="lab1/Makefile" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/Makefile"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="2711"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="clock.c" partName="clock.c" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/clock.c" title="clock.c" tooltip="lab1/kern/driver/clock.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/clock.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="clock.h" partName="clock.h" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/clock.h" title="clock.h" tooltip="lab1/kern/driver/clock.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/clock.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="intr.c" partName="intr.c" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/intr.c" title="intr.c" tooltip="lab1/kern/driver/intr.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/intr.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="intr.h" partName="intr.h" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/intr.h" title="intr.h" tooltip="lab1/kern/driver/intr.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/intr.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="kbdreg.h" partName="kbdreg.h" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/kbdreg.h" title="kbdreg.h" tooltip="lab1/kern/driver/kbdreg.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/kbdreg.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="picirq.c" partName="picirq.c" path="/home/shengjia/ucore/ucore_os_lab/labcodes/lab1/lab1/kern/driver/picirq.c" title="picirq.c" tooltip="lab1/kern/driver/picirq.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab1/kern/driver/picirq.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="1052"/>
 </editor>
 </editors>
 <views>
-<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
-<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.cdt.ui.cview.groupincludes="false" org.eclipse.cdt.ui.cview.groupmacros="false" org.eclipse.cdt.ui.editor.CUChildren="true" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
-</view>
 <view id="org.eclipse.ui.views.PropertySheet" partName="Properties"/>
-<view id="org.eclipse.cdt.make.ui.views.MakeView" partName="Make Target">
-<viewState/>
-</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Errors (2 items)"/>
-<category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings (1 item)"/>
 </expanded>
-<columnWidths org.eclipse.ui.ide.locationField="135" org.eclipse.ui.ide.markerType="470" org.eclipse.ui.ide.pathField="180" org.eclipse.ui.ide.resourceField="135" org.eclipse.ui.ide.severityAndDescriptionField="450"/>
+<columnWidths org.eclipse.ui.ide.locationField="135" org.eclipse.ui.ide.markerType="1110" org.eclipse.ui.ide.pathField="180" org.eclipse.ui.ide.resourceField="135" org.eclipse.ui.ide.severityAndDescriptionField="450"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
@@ -70,6 +112,9 @@
 </viewState>
 </view>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
 <view id="org.eclipse.ui.views.TaskList" partName="Tasks">
@@ -84,11 +129,14 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
 </view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<view id="org.eclipse.cdt.make.ui.views.MakeView" partName="Make Target">
 <viewState/>
 </view>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
+<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.cdt.ui.cview.groupincludes="false" org.eclipse.cdt.ui.cview.groupmacros="false" org.eclipse.cdt.ui.editor.CUChildren="true" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+</view>
 </views>
-<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="org.eclipse.cdt.ui.CPerspective">
+<perspectives activePart="org.eclipse.cdt.ui.editor.asm.AsmEditor" activePerspective="org.eclipse.cdt.ui.CPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -199,9 +247,9 @@
 <new_wizard_action id="org.eclipse.cdt.ui.wizards.NewClassCreationWizard"/>
 <perspective_action id="org.eclipse.debug.ui.DebugPerspective"/>
 <perspective_action id="org.eclipse.team.ui.TeamSynchronizingPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
-<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.ui.views.TaskList"/>
@@ -262,10 +310,7 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1_test/boot/asm.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/lab1_test/boot/bootasm.S"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1_test/boot/bootmain.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1_test/libs/printfmt.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" path="/lab1_test/Makefile"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/lab1_test/boot/bootasm.S"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1_test/boot/asm.h"/>
@@ -274,85 +319,175 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1_test/kern/debug/kdebug.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/debug/kdebug.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/trap/trap.c"/>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" uri="file:/home/shengjia/ucore/ucore_os_lab/labcodes_answer/lab3_result/kern/mm/vmm.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/boot/bootmain.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/lab1/boot/bootasm.S"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/boot/asm.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" path="/lab1/Makefile"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/boot/asm.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/lab1/boot/bootasm.S"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/clock.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/clock.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/console.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/console.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/intr.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/intr.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/kbdreg.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/picirq.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/lab1/kern/trap/trapentry.S"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/trap/trap.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/trap/trap.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/console.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab1/kern/driver/console.c"/>
 </editors>
-<item historyLabel="asm.h" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="bootasm.S" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="1889" y="0"/>
 </item>
-<item historyLabel="printfmt.c" index="3">
+<item historyLabel="bootasm.S" index="2">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Makefile" index="4">
+<item historyLabel="asm.h" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="printfmt.c" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Makefile" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="printfmt.c" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="1889" y="0"/>
 </item>
-<item historyLabel="bootasm.S" index="5">
+<item historyLabel="asm.h" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="asm.h" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="1889" y="0"/>
 </item>
-<item historyLabel="asm.h" index="6">
+<item historyLabel="elf.h" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="1889" y="0"/>
 </item>
-<item historyLabel="elf.h" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="bootmain.c" index="2">
-<position info="not_deleted" x="1889" y="0"/>
-</item>
-<item historyLabel="Makefile" index="4">
+<item historyLabel="Makefile" index="1">
 <position info="not_deleted" x="5622" y="5"/>
 </item>
-<item historyLabel="gdbinit" index="8">
+<item historyLabel="gdbinit" index="5">
 <position info="not_deleted" x="69" y="0"/>
 </item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="1889" y="0"/>
 </item>
-<item historyLabel="bootasm.S" index="5">
+<item historyLabel="bootasm.S" index="2">
 <position info="not_deleted" x="2292" y="81"/>
 </item>
-<item historyLabel="bootmain.c" index="2">
+<item historyLabel="bootmain.c" index="0">
 <position info="not_deleted" x="3173" y="53"/>
 </item>
-<item historyLabel="kdebug.c" index="9">
+<item historyLabel="kdebug.c" index="6">
 <position info="not_deleted" x="8250" y="0"/>
 </item>
-<item historyLabel="kdebug.c" index="10">
+<item historyLabel="kdebug.c" index="7">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="kdebug.c" index="10">
+<item historyLabel="kdebug.c" index="7">
 <position info="not_deleted" x="12018" y="0"/>
 </item>
-<item historyLabel="kdebug.c" index="10">
+<item historyLabel="kdebug.c" index="7">
 <position info="not_deleted" x="11748" y="0"/>
 </item>
-<item active="true" historyLabel="trap.c" index="11">
+<item historyLabel="trap.c" index="8">
 <position info="not_deleted" x="0" y="0"/>
 </item>
+<item historyLabel="vmm.c" index="9">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="bootmain.c" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="bootasm.S" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="asm.h" index="12">
+<position info="not_deleted" x="531" y="0"/>
+</item>
+<item historyLabel="Makefile" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="asm.h" index="14">
+<position info="not_deleted" x="531" y="0"/>
+</item>
+<item historyLabel="bootasm.S" index="15">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="clock.c" index="16">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="clock.h" index="17">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="console.c" index="18">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="console.h" index="19">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="intr.c" index="20">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="intr.h" index="21">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="kbdreg.h" index="22">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="picirq.c" index="23">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="asm.h" index="14">
+<position info="not_deleted" x="532" y="0"/>
+</item>
+<item historyLabel="bootasm.S" index="15">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="asm.h" index="14">
+<position info="not_deleted" x="268" y="0"/>
+</item>
+<item historyLabel="bootasm.S" index="15">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="trapentry.S" index="24">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="trap.h" index="25">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="trap.c" index="26">
+<position info="not_deleted" x="17" y="0"/>
+</item>
+<item historyLabel="trap.h" index="25">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="console.h" index="27">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="console.c" index="28">
+<position info="not_deleted" x="1974" y="0"/>
+</item>
+<item historyLabel="trap.h" index="25">
+<position info="not_deleted" x="3082" y="0"/>
+</item>
+<item historyLabel="trap.c" index="26">
+<position info="not_deleted" x="1837" y="0"/>
+</item>
+<item historyLabel="trap.h" index="25">
+<position info="not_deleted" x="3082" y="0"/>
+</item>
+<item historyLabel="console.c" index="28">
+<position info="not_deleted" x="1974" y="0"/>
+</item>
+<item historyLabel="console.h" index="27">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="trapentry.S" index="24">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="bootasm.S" index="15"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
@@ -370,38 +505,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="trap.c" tooltip="lab1/kern/trap/trap.c">
-<persistable path="/lab1/kern/trap/trap.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="trap.h" tooltip="lab1/kern/trap/trap.h">
+<persistable path="/lab1/kern/trap/trap.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="kdebug.c" tooltip="lab1/kern/debug/kdebug.c">
-<persistable path="/lab1/kern/debug/kdebug.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="trapentry.S" tooltip="lab1/kern/trap/trapentry.S">
+<persistable path="/lab1/kern/trap/trapentry.S"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="kdebug.c" tooltip="lab1_test/kern/debug/kdebug.c">
-<persistable path="/lab1_test/kern/debug/kdebug.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="picirq.c" tooltip="lab1/kern/driver/picirq.c">
+<persistable path="/lab1/kern/driver/picirq.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="report.md" tooltip="lab1_test/report.md">
-<persistable path="/lab1_test/report.md"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="kbdreg.h" tooltip="lab1/kern/driver/kbdreg.h">
+<persistable path="/lab1/kern/driver/kbdreg.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="gdbinit" tooltip="lab1_test/tools/gdbinit">
-<persistable path="/lab1_test/tools/gdbinit"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="intr.h" tooltip="lab1/kern/driver/intr.h">
+<persistable path="/lab1/kern/driver/intr.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="elf.h" tooltip="lab1_test/libs/elf.h">
-<persistable path="/lab1_test/libs/elf.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="intr.c" tooltip="lab1/kern/driver/intr.c">
+<persistable path="/lab1/kern/driver/intr.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" name="Makefile" tooltip="lab1_test/Makefile">
-<persistable path="/lab1_test/Makefile"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="console.h" tooltip="lab1/kern/driver/console.h">
+<persistable path="/lab1/kern/driver/console.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="printfmt.c" tooltip="lab1_test/libs/printfmt.c">
-<persistable path="/lab1_test/libs/printfmt.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="console.c" tooltip="lab1/kern/driver/console.c">
+<persistable path="/lab1/kern/driver/console.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="bootmain.c" tooltip="lab1_test/boot/bootmain.c">
-<persistable path="/lab1_test/boot/bootmain.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="clock.h" tooltip="lab1/kern/driver/clock.h">
+<persistable path="/lab1/kern/driver/clock.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="bootasm.S" tooltip="lab1_test/boot/bootasm.S">
-<persistable path="/lab1_test/boot/bootasm.S"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="clock.c" tooltip="lab1/kern/driver/clock.c">
+<persistable path="/lab1/kern/driver/clock.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="asm.h" tooltip="lab1_test/boot/asm.h">
-<persistable path="/lab1_test/boot/asm.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" name="Makefile" tooltip="lab1/Makefile">
+<persistable path="/lab1/Makefile"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="asm.h" tooltip="lab1/boot/asm.h">
+<persistable path="/lab1/boot/asm.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="bootasm.S" tooltip="lab1/boot/bootasm.S">
+<persistable path="/lab1/boot/bootasm.S"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="bootmain.c" tooltip="lab1/boot/bootmain.c">
+<persistable path="/lab1/boot/bootmain.c"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="vmm.c" tooltip="/home/shengjia/ucore/ucore_os_lab/labcodes_answer/lab3_result/kern/mm/vmm.c">
+<persistable uri="file:/home/shengjia/ucore/ucore_os_lab/labcodes_answer/lab3_result/kern/mm/vmm.c"/>
 </file>
 </mruList>
 </workbench>
