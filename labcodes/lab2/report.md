@@ -46,10 +46,15 @@ This is accomplished by adding the following snippet of code in ```get_pte```
     return &((pte_t *)KADDR(PDE_ADDR(*pdep)))[PTX(la)];		// (8) return page table entry
 ```
 * PDE contains the following fields
-31 .. 12 | 11 .. 8 | 7 .. 0 
-page table address | reserved | flags
+
+| 31 .. 12 | 11 .. 8 | 7 .. 0 |
+| --- | --- | --- |
+| page table address | reserved | flags |
+
 * PTE contains the following fields
+
 31 .. 12 | 11 .. 9 | 8 .. 0
+--- | --- | --- 
 page address | reserved | flags
  
 # Task 3
