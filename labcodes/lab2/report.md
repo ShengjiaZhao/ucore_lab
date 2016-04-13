@@ -84,6 +84,8 @@ bit position | purpose | use in ucore
 7 | reserved | 
 8 | ignored | 
 
+* During a page fault, the hardware must put the address that triggered the page fault in CR2, save the current context information into the stack, find the interrupt entry for page fault exception, and execute the interrupt handler function
+
 # Task 3
 This is accomplished by adding the following snippet of code in ```page_remove_pte```
 ```
@@ -96,3 +98,6 @@ This is accomplished by adding the following snippet of code in ```page_remove_p
         tlb_invalidate(pgdir, la);			//(6) flush tlb
     }
 ```
+
+* The i-th item of ```Page``` stores information about the i-th physical page
+* Turn off paging and segmenting by setting the corresponding bits in CR0 register
