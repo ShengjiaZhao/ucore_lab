@@ -55,7 +55,8 @@ Each time a victim is to be selected, we check the physical page at the current 
   2. access=0, dirty=1, set dirty=0 and set the dirty flag in ```struct Page```, move clock one page forward
   3. access=1, dirty=0, set access=0 and move clock one page forward
   4. access=0, dirty=0, if the dirty flag in ```struct Page``` is 1, write the page back to swap. Set this page as the swap out victim
-Additional questions:
+
+* Additional questions:
   1. The replaced page should have both accessed and dirty bit set to 0
   2. By checking bit 6 and bit 7 of the PTE entry
   3. Swap out whenever a new page is needed, but not physical pages are available. Swap in whenever a page in swap is accessed
