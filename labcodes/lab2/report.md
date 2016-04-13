@@ -27,6 +27,7 @@ and this is accomplished by the following snippet of code
     nr_free += n;	
 	list_add_after(insert_loc, &(base->page_link));
 ```
+* The algorithm can be improved by using better data structure to main the list of free block. An example would be to use a binary tree to organize the blocks, so that inserting a block takes O(logN) time rather than O(N)
 
 # Task 2
 This is accomplished by adding the following snippet of code in ```get_pte```
@@ -44,7 +45,13 @@ This is accomplished by adding the following snippet of code in ```get_pte```
     }
     return &((pte_t *)KADDR(PDE_ADDR(*pdep)))[PTX(la)];		// (8) return page table entry
 ```
-
+* PDE contains the following fields
+31 .. 12 | 11 .. 8 | 7 .. 0 
+page table address | reserved | flags
+* PTE contains the following fields
+31 .. 12 | 11 .. 9 | 8 .. 0
+page address | reserved | flags
+ 
 # Task 3
 This is accomplished by adding the following snippet of code in ```page_remove_pte```
 ```
