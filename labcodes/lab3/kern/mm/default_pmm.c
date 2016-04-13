@@ -9,7 +9,7 @@
    usually split, and the remainder added to the list as another free block.
    Please see Page 196~198, Section 8.2 of Yan Wei Min's chinese book "Data Structure -- C programming language"
 */
-// LAB2 EXERCISE 1: YOUR CODE
+// LAB2 EXERCISE 1: 2012010449
 // you should rewrite functions: default_init,default_init_memmap,default_alloc_pages, default_free_pages.
 /*
  * Details of FFMA
@@ -86,17 +86,18 @@ default_alloc_pages(size_t n) {
     if (n > nr_free) {
         return NULL;
     }
-
+	print_free_list();
     struct Page *page = NULL;
     list_entry_t *le = &free_list;
     while ((le = list_next(le)) != &free_list) {
         struct Page *p = le2page(le, page_link);
+		// cprintf("%d ", (unsigned int)p / sizeof(struct Page));
         if (p->property >= n) {
             page = p;
             break;
         }
     }
-
+	// cprintf("\n");
     if (page != NULL) {
         list_del(&(page->page_link));
         if (page->property > n) {
@@ -254,7 +255,7 @@ default_check(void) {
     free_pages(p1, 3);
     assert(PageProperty(p0) && p0->property == 1);
     assert(PageProperty(p1) && p1->property == 3);
-
+	// cprintf("%d %d\n", (unsigned int)alloc_page() / sizeof(struct Page), (unsigned int)p2 / sizeof(struct Page));
     assert((p0 = alloc_page()) == p2 - 1);
     free_page(p0);
     assert((p0 = alloc_pages(2)) == p2 + 1);
