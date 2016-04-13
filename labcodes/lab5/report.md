@@ -1,4 +1,22 @@
+# Task 0
+```trap.c``` should be updated by adding the following statement to ```idt_init```
+```
+	SETGATE(idt[T_SYSCALL], 1, GD_KTEXT, __vectors[T_SYSCALL], DPL_USER);
+```
+Furthermore, ```proc.c``` should be updated by adding additional initialization to ```alloc_proc```
+```
+	proc->wait_state = 0;
+    proc->cptr = NULL;
+	proc->optr = NULL;
+	proc->yptr = NULL;
+```
+and to ```do_fork```
+```
+    set_links(proc);
+```
+
 # Task 1
+To set up the trapframe for user environment, use the following code
 ```
 	tf->tf_cs = USER_CS;
 	tf->tf_ds = tf->tf_es = tf->tf_ss = USER_DS;
