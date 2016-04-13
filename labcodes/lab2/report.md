@@ -51,12 +51,39 @@ This is accomplished by adding the following snippet of code in ```get_pte```
 | --- | --- | --- |
 | page table address | reserved | flags |
 
+The flags field contains the following bits
+
+bit position | purpose | use in ucore
+--- | --- | ---
+0 | the page table is present | if ucore detects a non-present page table in ```get_pte``` it creates one
+1 | writes are allowed (for all 1024 pages) | not used
+2 | users not in ring 0 allowed | not used
+3 | page-level write through | not used
+4 | page-level cache disable | not used
+5 | has been used for linear address translation | not used
+6 | ignored |
+7 | ignored |
+
 * PTE contains the following fields
 
 31 .. 12 | 11 .. 9 | 8 .. 0
 --- | --- | --- 
 page address | reserved | flags
  
+The flags field contains the following bits
+
+bit position | purpose | use in ucore
+--- | --- | ---
+0 | the page is present | this indicates an unallocated valid page, or a page in swap, or a memory exception
+1 | writes are allowed | used if copy-on-write is desired
+2 | users not in ring 0 allowed | used to protect the page
+3 | page-level write through | not used
+4 | page-level cache disable | not used
+5 | has been used for linear address translation | used in swap algorithms
+6 | dirty | used in swap algorithms
+7 | reserved | 
+8 | ignored | 
+
 # Task 3
 This is accomplished by adding the following snippet of code in ```page_remove_pte```
 ```
