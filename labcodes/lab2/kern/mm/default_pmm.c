@@ -141,7 +141,6 @@ default_free_pages(struct Page *base, size_t n) {
             list_del(&(p->page_link));
         } 
 		else if ((unsigned int)p < (unsigned int)base) {
-			cprintf("Here");
 			insert_loc = &(p->page_link);
 		}
     }
