@@ -36,7 +36,7 @@ struct sched_class {
      */
 };
 
-struct 	 {
+struct run_queue {
     list_entry_t run_list;
     unsigned int proc_num;
     int max_time_slice;
