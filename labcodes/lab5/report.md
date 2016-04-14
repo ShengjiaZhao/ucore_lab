@@ -16,10 +16,12 @@ and to ```do_fork```
 ```
 
 # Task 1
-To set up the trapframe for user environment, use the following code
+To set up the trapframe for user environment, use the following code	
 ```
 	tf->tf_cs = USER_CS;
-	tf->tf_ds = tf->tf_es = tf->tf_ss = USER_DS;
+	tf->tf_ds = USER_DS;
+	tf->tf_es = USER_DS;
+	tf->tf_ss = USER_DS;
 	tf->tf_esp = USTACKTOP;
 	tf->tf_eip = elf->e_entry;
 	tf->tf_eflags = FL_IF;

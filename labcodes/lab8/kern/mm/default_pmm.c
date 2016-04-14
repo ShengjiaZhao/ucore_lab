@@ -86,7 +86,7 @@ default_alloc_pages(size_t n) {
     if (n > nr_free) {
         return NULL;
     }
-	print_free_list();
+
     struct Page *page = NULL;
     list_entry_t *le = &free_list;
     while ((le = list_next(le)) != &free_list) {
