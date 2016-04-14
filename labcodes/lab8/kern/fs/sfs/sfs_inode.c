@@ -600,19 +600,22 @@ sfs_io_nolock(struct sfs_fs *sfs, struct sfs_inode *sin, void *buf, off_t offset
 	 *       NOTICE: useful function: sfs_bmap_load_nolock, sfs_buf_op	
 	*/
 	//cprintf("Reading from %d to %d, %d blocks\n", offset, endpos, nblks);
-	blkoff = offset % SFS_BLKSIZE;
-	if (blkoff != 0) {
+	// Read the first block, if offset is in the middle of the block
+	blkoff = offset % SFS_BLKSIZE;			
+	if (blkoff != 0) {			
 		size = nblks > 0 ? SFS_BLKSIZE - blkoff : endpos - offset;
 		if (sfs_bmap_load_nolock(sfs, sin, blkno, &ino))
 			goto out;
 		if (sfs_buf_op(sfs, buf, size, ino, blkoff))
 			goto out;
-		nblks--;
 		alen += size;
 		buf = (char *)buf + size;
 		blkno++;
+	} else {					// Otherwise read this block either as a full block, or the last block
+		nblks++;
 	}
-
+	
+	// Read the full blocks 
 	int read_count;
 	for (read_count = 0; read_count < (int)nblks - 1; read_count++) {
 		if (sfs_bmap_load_nolock(sfs, sin, blkno, &ino))
@@ -624,6 +627,7 @@ sfs_io_nolock(struct sfs_fs *sfs, struct sfs_inode *sin, void *buf, off_t offset
 		buf = (char *)buf + SFS_BLKSIZE;
 	}
 
+	// Read the final incomplete block, if it exists
 	size = endpos % SFS_BLKSIZE;
     if(size != 0  &&  nblks > 0) {
         if(sfs_bmap_load_nolock(sfs, sin, blkno, &ino)) 

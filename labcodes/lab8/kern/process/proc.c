@@ -738,18 +738,24 @@ load_icode(int fd, int argc, char **kargv) {
     struct trapframe *tf = current->tf;
     memset(tf, 0, sizeof(struct trapframe));
 	
-	uint32_t argv_size = 0, i = 0;
+	// Allocate stack storage for actual arguments
+	uint32_t argv_size = 0, i;
     for (i = 0; i < argc; i ++)
         argv_size += strnlen(kargv[i], EXEC_MAX_ARG_LEN + 1) + 1;
-    uintptr_t stacktop = USTACKTOP - (argv_size / sizeof(long) + 1) * sizeof(long);
-    char** uargv = (char **)(stacktop  - argc * sizeof(char *));
-    argv_size = stacktop;
+    uintptr_t stack_top = USTACKTOP - argv_size;
+	stack_top = stack_top & 0xFFFFFFFC;				// Align stack top to 4 bytes boundaries
+	uintptr_t content_ptr = stack_top;
+	// Allocate stack storage for argument pointers
+    stack_top -= argc * sizeof(char *);
+    uintptr_t argv_ptr = stack_top;
+	// Copy contents and pointers into the stack
     for (i = 0; i < argc; i ++) {
-        uargv[i] = strcpy(argv_size, kargv[i]);
-        argv_size += strnlen(kargv[i], EXEC_MAX_ARG_LEN + 1) + 1;
+        ((char **)argv_ptr)[i] = strcpy(content_ptr, kargv[i]);
+        content_ptr += strnlen(kargv[i], EXEC_MAX_ARG_LEN + 1) + 1;
     }
-    stacktop = (uintptr_t)uargv - sizeof(int);
-    *(int *)stacktop = argc;
+	// Allocate stack storage for argment count
+    stack_top -= sizeof(int);
+    *(int *)stack_top = argc;
 	
     /* LAB5:EXERCISE1 2012010449
      * should set tf_cs,tf_ds,tf_es,tf_ss,tf_esp,tf_eip,tf_eflags
