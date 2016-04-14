@@ -30,7 +30,7 @@ sched_class_pick_next(void) {
     return sched_class->pick_next(rq);
 }
 
-static void
+void
 sched_class_proc_tick(struct proc_struct *proc) {
     if (proc != idleproc) {
         sched_class->proc_tick(rq, proc);
@@ -41,12 +41,13 @@ sched_class_proc_tick(struct proc_struct *proc) {
 }
 
 static struct run_queue __rq;
+extern struct sched_class stride_sched_class;
 
 void
 sched_init(void) {
     list_init(&timer_list);
 
-    sched_class = &default_sched_class;
+    sched_class = &stride_sched_class;
 
     rq = &__rq;
     rq->max_time_slice = MAX_TIME_SLICE;
@@ -77,6 +78,7 @@ wakeup_proc(struct proc_struct *proc) {
 
 void
 schedule(void) {
+	cprintf("Here!!!\n");
     bool intr_flag;
     struct proc_struct *next;
     local_intr_save(intr_flag);
@@ -92,9 +94,11 @@ schedule(void) {
             next = idleproc;
         }
         next->runs ++;
+		cprintf("Here!!!\n");
         if (next != current) {
             proc_run(next);
         }
+		cprintf("Here!!!\n");
     }
     local_intr_restore(intr_flag);
 }
