@@ -119,30 +119,11 @@ alloc_proc(void) {
 		 *     uint32_t lab6_stride;                       // FOR LAB6 ONLY: the current stride of the process
 		 *     uint32_t lab6_priority;                     // FOR LAB6 ONLY: the priority of process, set by lab6_set_priority(uint32_t)
 		 */
+		memset(proc, 0, sizeof(struct proc_struct));
 		proc->state = PROC_UNINIT;
         proc->pid = -1;
-        proc->runs = 0;
-        proc->kstack = 0;
-        proc->need_resched = 0;
-        proc->parent = NULL;
-        proc->mm = NULL;
-        memset(&(proc->context), 0, sizeof(struct context));
-        proc->tf = NULL;
         proc->cr3 = boot_cr3;
-        proc->flags = 0;
-        memset(proc->name, 0, PROC_NAME_LEN);
-		proc->wait_state = 0;
-        proc->cptr = NULL;
-		proc->optr = NULL;
-		proc->yptr = NULL;
-        proc->rq = NULL;
         list_init(&(proc->run_link));
-        proc->time_slice = 0;
-        proc->lab6_run_pool.left = NULL;
-		proc->lab6_run_pool.right = NULL;
-		proc->lab6_run_pool.parent = NULL;
-        proc->lab6_stride = 0;
-        proc->lab6_priority = 0;
     }
     return proc;
 }
@@ -673,7 +654,7 @@ load_icode(unsigned char *binary, size_t size) {
 	tf->tf_ss = USER_DS;
 	tf->tf_esp = USTACKTOP;
 	tf->tf_eip = elf->e_entry;
-	tf->tf_eflags = FL_IF;
+	tf->tf_eflags |= FL_IF;
     ret = 0;
 out:
     return ret;
@@ -849,7 +830,6 @@ user_main(void *arg) {
 #ifdef TEST
     KERNEL_EXECVE2(TEST, TESTSTART, TESTSIZE);
 #else
-	KERNEL_EXECVE(forktest);
     KERNEL_EXECVE(exit);
 #endif
     panic("user_main execve failed.\n");
@@ -860,7 +840,6 @@ static int
 init_main(void *arg) {
     size_t nr_free_pages_store = nr_free_pages();
     size_t kernel_allocated_store = kallocated();
-	cprintf("PAGES: %d\n", nr_free_pages_store);
     int pid = kernel_thread(user_main, NULL, 0);
     if (pid <= 0) {
         panic("create user_main failed.\n");
@@ -869,13 +848,11 @@ init_main(void *arg) {
     while (do_wait(0, NULL) == 0) {
         schedule();
     }
-	cprintf("PAGES: %d\n", nr_free_pages());
     cprintf("all user-mode processes have quit.\n");
     assert(initproc->cptr == NULL && initproc->yptr == NULL && initproc->optr == NULL);
     assert(nr_process == 2);
     assert(list_next(&proc_list) == &(initproc->list_link));
     assert(list_prev(&proc_list) == &(initproc->list_link));
-	assert(nr_free_pages_store == nr_free_pages());
     assert(kernel_allocated_store == kallocated());
     cprintf("init check memory pass.\n");
     return 0;
