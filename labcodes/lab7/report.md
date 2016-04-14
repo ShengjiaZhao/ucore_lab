@@ -67,3 +67,6 @@ and the following code to ```phi_put_forks_condvar``` to stop eating and test on
 	phi_test_condvar(LEFT);
 	phi_test_condvar(RIGHT);
 ```
+
+## Comparison with user monitor
+This is essentially the same as before, entering critical sections by the TS instruction
