@@ -42,9 +42,9 @@ stride_init(struct run_queue *rq) {
       * (3) set number of process: rq->proc_num to 0       
       */
 	list_init(&(rq->run_list));
+	rq->max_time_slice = MAX_TIME_SLICE;
 	rq->lab6_run_pool = NULL;
 	rq->proc_num = 0;	
-	
 }
 
 /*
@@ -62,7 +62,7 @@ stride_init(struct run_queue *rq) {
  */
 static void
 stride_enqueue(struct run_queue *rq, struct proc_struct *proc) {
-     /* LAB6: YOUR CODE 
+     /* LAB6: 2012010449
       * (1) insert the proc into rq correctly
       * NOTICE: you can use skew_heap or list. Important functions
       *         skew_heap_insert: insert a entry into skew_heap
@@ -118,10 +118,10 @@ stride_pick_next(struct run_queue *rq) {
       * (2) update p;s stride value: p->lab6_stride
       * (3) return p
       */
+	if (rq->lab6_run_pool == NULL)
+		return NULL;
     struct proc_struct *next_proc = le2proc(rq->lab6_run_pool, lab6_run_pool);
-	if (next_proc != NULL) {
-		next_proc->lab6_stride += next_proc->lab6_priority == 0 ? BIG_STRIDE : BIG_STRIDE / next_proc->lab6_priority;
-	}
+	next_proc->lab6_stride += next_proc->lab6_priority == 0 ? BIG_STRIDE : BIG_STRIDE / next_proc->lab6_priority;	
 	return next_proc;
 	
 }

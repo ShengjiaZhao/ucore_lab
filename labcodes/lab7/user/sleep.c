@@ -15,11 +15,11 @@ int
 main(void) {
     unsigned int time = gettime_msec();
     int pid1, exit_code;
-
+	//cprintf("STIME:%d\n", gettime_msec());
     if ((pid1 = fork()) == 0) {
         sleepy(pid1);
     }
-    
+    //cprintf("ETIME:%d\n", gettime_msec());
     assert(waitpid(pid1, &exit_code) == 0 && exit_code == 0);
     cprintf("use %04d msecs.\n", gettime_msec() - time);
     cprintf("sleep pass.\n");
