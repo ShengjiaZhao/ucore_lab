@@ -79,7 +79,7 @@
  * */
 #define VPT                 0xFAC00000
 
-#define KSTACKPAGE          2                           // # of pages in kernel stack
+#define KSTACKPAGE          2	                           // # of pages in kernel stack
 #define KSTACKSIZE          (KSTACKPAGE * PGSIZE)       // sizeof kernel stack
 
 #define USERTOP             0xB0000000

@@ -1,3 +1,26 @@
+# Task 0
+Additional initialization is required in ```alloc_proc``` of ```proc.c```
+```
+    proc->rq = NULL;
+    list_init(&(proc->run_link));
+    proc->time_slice = 0;
+    proc->lab6_run_pool.left = NULL;
+	proc->lab6_run_pool.right = NULL;
+	proc->lab6_run_pool.parent = NULL;
+    proc->lab6_stride = 0;
+    proc->lab6_priority = 0;
+```
+
+Furthermore in ```trap.c``` during timer interrupt, the ```sched_class_proc_tick``` function should be called. This means that the corresponding function in ```sched.c``` should be set to global
+```
+	/* static */ void
+	sched_class_proc_tick(struct proc_struct *proc)
+```
+and the corresponding declaration added in ```sched.h```
+```
+	void sched_class_proc_tick(struct proc_struct *proc);
+```
+
 # Task 1
 1. In sched_class
 	1. ```init``` initializes the run queue struct
@@ -14,13 +37,15 @@ If ```proc_tick``` forces the process to relinquish the CPU, it priority decreas
 For initialization add the following code to ```stride_init```
 ```
 	list_init(&(rq->run_list));
+	rq->max_time_slice = MAX_TIME_SLICE;
 	rq->lab6_run_pool = NULL;
-	rq->proc_num = 0;
+	rq->proc_num = 0;	
 ```
 To enqueue or dequeue a new element insert the following code to ```stride_enqueue``` and ```stride_dequeue```
 ```
 	rq->lab6_run_pool = skew_heap_insert(rq->lab6_run_pool, &(proc->lab6_run_pool), proc_stride_comp_f);
-	proc->time_slice = rq->max_time_slice;
+	if (proc->time_slice <= 0 || proc->time_slice > rq->max_time_slice)
+		proc->time_slice = rq->max_time_slice;
 	proc->rq = rq;
 	rq->proc_num++;
 ```

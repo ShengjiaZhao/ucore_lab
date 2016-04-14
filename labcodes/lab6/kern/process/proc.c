@@ -87,23 +87,39 @@ static struct proc_struct *
 alloc_proc(void) {
     struct proc_struct *proc = kmalloc(sizeof(struct proc_struct));
     if (proc != NULL) {
-    //LAB4:EXERCISE1 YOUR CODE
-    /*
-     * below fields in proc_struct need to be initialized
-     *       enum proc_state state;                      // Process state
-     *       int pid;                                    // Process ID
-     *       int runs;                                   // the running times of Proces
-     *       uintptr_t kstack;                           // Process kernel stack
-     *       volatile bool need_resched;                 // bool value: need to be rescheduled to release CPU?
-     *       struct proc_struct *parent;                 // the parent process
-     *       struct mm_struct *mm;                       // Process's memory management field
-     *       struct context context;                     // Switch here to run process
-     *       struct trapframe *tf;                       // Trap frame for current interrupt
-     *       uintptr_t cr3;                              // CR3 register: the base addr of Page Directroy Table(PDT)
-     *       uint32_t flags;                             // Process flag
-     *       char name[PROC_NAME_LEN + 1];               // Process name
-     */
-        proc->state = PROC_UNINIT;
+		//LAB4:EXERCISE1 2012010449
+		/*
+		 * below fields in proc_struct need to be initialized
+		 *       enum proc_state state;                      // Process state
+		 *       int pid;                                    // Process ID
+		 *       int runs;                                   // the running times of Proces
+		 *       uintptr_t kstack;                           // Process kernel stack
+		 *       volatile bool need_resched;                 // bool value: need to be rescheduled to release CPU?
+		 *       struct proc_struct *parent;                 // the parent process
+		 *       struct mm_struct *mm;                       // Process's memory management field
+		 *       struct context context;                     // Switch here to run process
+		 *       struct trapframe *tf;                       // Trap frame for current interrupt
+		 *       uintptr_t cr3;                              // CR3 register: the base addr of Page Directroy Table(PDT)
+		 *       uint32_t flags;                             // Process flag
+		 *       char name[PROC_NAME_LEN + 1];               // Process name
+		 */
+		//LAB5 2012010449 : (update LAB4 steps)
+		/*
+		 * below fields(add in LAB5) in proc_struct need to be initialized	
+		 *       uint32_t wait_state;                        // waiting state
+		 *       struct proc_struct *cptr, *yptr, *optr;     // relations between processes
+		 */
+		//LAB6 2012010449 : (update LAB5 steps)
+		/*
+		 * below fields(add in LAB6) in proc_struct need to be initialized
+		 *     struct run_queue *rq;                       // running queue contains Process
+		 *     list_entry_t run_link;                      // the entry linked in run queue
+		 *     int time_slice;                             // time slice for occupying the CPU
+		 *     skew_heap_entry_t lab6_run_pool;            // FOR LAB6 ONLY: the entry in the run pool
+		 *     uint32_t lab6_stride;                       // FOR LAB6 ONLY: the current stride of the process
+		 *     uint32_t lab6_priority;                     // FOR LAB6 ONLY: the priority of process, set by lab6_set_priority(uint32_t)
+		 */
+		proc->state = PROC_UNINIT;
         proc->pid = -1;
         proc->runs = 0;
         proc->kstack = 0;
@@ -115,12 +131,16 @@ alloc_proc(void) {
         proc->cr3 = boot_cr3;
         proc->flags = 0;
         memset(proc->name, 0, PROC_NAME_LEN);
-        proc->wait_state = 0;
-        proc->cptr = proc->optr = proc->yptr = NULL;
+		proc->wait_state = 0;
+        proc->cptr = NULL;
+		proc->optr = NULL;
+		proc->yptr = NULL;
         proc->rq = NULL;
         list_init(&(proc->run_link));
         proc->time_slice = 0;
-        proc->lab6_run_pool.left = proc->lab6_run_pool.right = proc->lab6_run_pool.parent = NULL;
+        proc->lab6_run_pool.left = NULL;
+		proc->lab6_run_pool.right = NULL;
+		proc->lab6_run_pool.parent = NULL;
         proc->lab6_stride = 0;
         proc->lab6_priority = 0;
     }
@@ -384,7 +404,7 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
         goto fork_out;
     }
     ret = -E_NO_MEM;
-    //LAB4:EXERCISE2 YOUR CODE
+	//LAB4:EXERCISE2 2012010449
     /*
      * Some Useful MACROs, Functions and DEFINEs, you can use them in below implementation.
      * MACROs or Functions:
@@ -409,7 +429,16 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     //    5. insert proc_struct into hash_list && proc_list
     //    6. call wakeup_proc to make the new child process RUNNABLE
     //    7. set ret vaule using child proc's pid
-    if ((proc = alloc_proc()) == NULL) {
+
+	//LAB5 2012010449 : (update LAB4 steps)
+	/* Some Functions
+	 *    set_links:  set the relation links of process.  ALSO SEE: remove_links:  lean the relation links of process 
+	 *    -------------------
+	*    update step 1: set child proc's parent to current process, make sure current process's wait_state is 0
+	*    update step 5: insert proc_struct into hash_list && proc_list, set the relation links of process
+	 */
+	proc = alloc_proc();
+    if (proc == NULL) {
         goto fork_out;
     }
 
@@ -426,16 +455,12 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
 
     bool intr_flag;
     local_intr_save(intr_flag);
-    {
-        proc->pid = get_pid();
-        hash_proc(proc);
-        set_links(proc);
-
-    }
+    proc->pid = get_pid();
+    hash_proc(proc);
+    set_links(proc);
     local_intr_restore(intr_flag);
 
     wakeup_proc(proc);
-
     ret = proc->pid;
 fork_out:
     return ret;
@@ -626,7 +651,7 @@ load_icode(unsigned char *binary, size_t size) {
     //(6) setup trapframe for user environment
     struct trapframe *tf = current->tf;
     memset(tf, 0, sizeof(struct trapframe));
-    /* LAB5:EXERCISE1 YOUR CODE
+    /* LAB5:EXERCISE1 2012010449
      * should set tf_cs,tf_ds,tf_es,tf_ss,tf_esp,tf_eip,tf_eflags
      * NOTICE: If we set trapframe correctly, then the user level process can return to USER MODE from kernel. So
      *          tf_cs should be USER_CS segment (see memlayout.h)
@@ -635,11 +660,13 @@ load_icode(unsigned char *binary, size_t size) {
      *          tf_eip should be the entry point of this binary program (elf->e_entry)
      *          tf_eflags should be set to enable computer to produce Interrupt
      */
-    tf->tf_cs = USER_CS;
-    tf->tf_ds = tf->tf_es = tf->tf_ss = USER_DS;
-    tf->tf_esp = USTACKTOP;
-    tf->tf_eip = elf->e_entry;
-    tf->tf_eflags = FL_IF;
+	tf->tf_cs = USER_CS;
+	tf->tf_ds = USER_DS;
+	tf->tf_es = USER_DS;
+	tf->tf_ss = USER_DS;
+	tf->tf_esp = USTACKTOP;
+	tf->tf_eip = elf->e_entry;
+	tf->tf_eflags = FL_IF;
     ret = 0;
 out:
     return ret;
@@ -815,6 +842,7 @@ user_main(void *arg) {
 #ifdef TEST
     KERNEL_EXECVE2(TEST, TESTSTART, TESTSIZE);
 #else
+	KERNEL_EXECVE(forktest);
     KERNEL_EXECVE(exit);
 #endif
     panic("user_main execve failed.\n");
@@ -825,7 +853,7 @@ static int
 init_main(void *arg) {
     size_t nr_free_pages_store = nr_free_pages();
     size_t kernel_allocated_store = kallocated();
-
+	cprintf("PAGES: %d\n", nr_free_pages_store);
     int pid = kernel_thread(user_main, NULL, 0);
     if (pid <= 0) {
         panic("create user_main failed.\n");
@@ -834,13 +862,13 @@ init_main(void *arg) {
     while (do_wait(0, NULL) == 0) {
         schedule();
     }
-
+	cprintf("PAGES: %d\n", nr_free_pages());
     cprintf("all user-mode processes have quit.\n");
     assert(initproc->cptr == NULL && initproc->yptr == NULL && initproc->optr == NULL);
     assert(nr_process == 2);
     assert(list_next(&proc_list) == &(initproc->list_link));
     assert(list_prev(&proc_list) == &(initproc->list_link));
-    assert(nr_free_pages_store == nr_free_pages());
+	assert(nr_free_pages_store == nr_free_pages());
     assert(kernel_allocated_store == kallocated());
     cprintf("init check memory pass.\n");
     return 0;
