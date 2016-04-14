@@ -1,8 +1,10 @@
 # Task 1
 To perform reading, we perform the following
+
 1. If the start offset is not aligned to the first block, we read in the incomplete part of the first block. Otherwise, we treat this either as a full block, or the last block
 2. Read in all the full blocks in the middle
 3. If the end address is not aligned to the last block, we read in the incomplete part of the last block 
+
 This is accomplished with the following code
 ```
 	// Read the first block, if offset is in the middle of the block
