@@ -78,7 +78,6 @@ wakeup_proc(struct proc_struct *proc) {
 
 void
 schedule(void) {
-	cprintf("Here!!!\n");
     bool intr_flag;
     struct proc_struct *next;
     local_intr_save(intr_flag);
@@ -94,11 +93,9 @@ schedule(void) {
             next = idleproc;
         }
         next->runs ++;
-		cprintf("Here!!!\n");
         if (next != current) {
             proc_run(next);
         }
-		cprintf("Here!!!\n");
     }
     local_intr_restore(intr_flag);
 }

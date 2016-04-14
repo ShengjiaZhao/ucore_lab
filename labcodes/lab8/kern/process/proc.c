@@ -214,7 +214,6 @@ get_pid(void) {
 // NOTE: before call switch_to, should load  base addr of "proc"'s new PDT
 void
 proc_run(struct proc_struct *proc) {
-	cprintf("Enter\n");
     if (proc != current) {
         bool intr_flag;
         struct proc_struct *prev = current, *next = proc;
@@ -223,10 +222,7 @@ proc_run(struct proc_struct *proc) {
             current = proc;
             load_esp0(next->kstack + KSTACKSIZE);
             lcr3(next->cr3);
-			cprintf("Exit %s %s \n", prev->name, next->name);
-			cprintf("%x %x\n", next->context.esp, next->context.eip);
             switch_to(&(prev->context), &(next->context));
-			cprintf("Done!\n");
         }
         local_intr_restore(intr_flag);
     }
@@ -483,9 +479,13 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     if (setup_kstack(proc) != 0) {
         goto bad_fork_cleanup_proc;
     }
+	
+	if(copy_files(clone_flags, proc))   
+		goto bad_fork_cleanup_kstack;   
+	
 	// 3. call copy_mm to dup OR share mm according clone_flag
     if (copy_mm(clone_flags, proc) != 0) {
-        goto bad_fork_cleanup_kstack;
+        goto bad_fork_cleanup_files;
     }
 	// 4. call copy_thread to setup tf & context in proc_struct
     copy_thread(proc, stack, tf);
@@ -505,7 +505,7 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
 fork_out:
     return ret;
 
-bad_fork_cleanup_fs:  //for LAB8
+bad_fork_cleanup_files:  //for LAB8
     put_files(proc);
 bad_fork_cleanup_kstack:
     put_kstack(proc);
@@ -613,10 +613,10 @@ load_icode(int fd, int argc, char **kargv) {
      * (7) setup trapframe for user environment
      * (8) if up steps failed, you should cleanup the env.
      */
-	cprintf("Loading icode\n");
 	if (current->mm != NULL) {
         panic("load_icode: current->mm must be empty.\n");
     }
+	struct proghdr *ph = NULL;
 
     int ret = -E_NO_MEM;
     struct mm_struct *mm;
@@ -636,7 +636,7 @@ load_icode(int fd, int argc, char **kargv) {
 	load_icode_read(fd, (void *)elf, sizeof(struct elfhdr), 0);
     //(3.2) get the entry of the program section headers of the bianry program (ELF format)
 
-	struct proghdr *ph = kmalloc(sizeof(struct proghdr) * elf->e_phnum);
+	ph = kmalloc(sizeof(struct proghdr) * elf->e_phnum);
 	load_icode_read(fd, (void *)ph, sizeof(struct proghdr) * elf->e_phnum, elf->e_phoff);
     //struct proghdr *ph = (struct proghdr *)(binary + elf_header.e_phoff);
     //(3.3) This program is valid?
@@ -768,14 +768,14 @@ load_icode(int fd, int argc, char **kargv) {
 	tf->tf_eip = elf->e_entry;
 	tf->tf_eflags |= FL_IF;
     ret = 0;
-	cprintf("Done!\n");
 out:
+	if (ph != NULL)
+		kfree(ph);
     return ret;
 bad_cleanup_mmap:
     exit_mmap(mm);
 bad_elf_cleanup_pgdir:
     put_pgdir(mm);
-	kfree(ph);
 bad_pgdir_cleanup_mm:
     mm_destroy(mm);
 bad_mm:
@@ -1029,7 +1029,7 @@ init_main(void *arg) {
     }
 
 	extern void check_sync(void);
-    check_sync();                // check philosopher sync problem
+    //check_sync();                // check philosopher sync problem
 
     while (do_wait(0, NULL) == 0) {
         schedule();
