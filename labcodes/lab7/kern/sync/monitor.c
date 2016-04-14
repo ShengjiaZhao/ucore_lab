@@ -39,17 +39,17 @@ cond_signal (condvar_t *cvp) {
 
 // Suspend calling thread on a condition variable waiting for condition Atomically unlocks 
 // mutex and suspends calling thread on conditional variable after waking up locks mutex. Notice: mp is mutex semaphore for monitor's procedures
-	void
-	cond_wait (condvar_t *cvp) {
-		//LAB7 EXERCISE1: 2012010449
-		cprintf("cond_wait begin:  cvp %x, cvp->count %d, cvp->owner->next_count %d\n", cvp, cvp->count, cvp->owner->next_count);
-		monitor_t* mt = cvp->owner;
-		cvp->count ++;
-		if(mt->next_count > 0)
-			up(&(mt->next));
-		else
-			up(&(mt->mutex));
-		down(&(cvp->sem));
-		cvp->count --;
-		cprintf("cond_wait end:  cvp %x, cvp->count %d, cvp->owner->next_count %d\n", cvp, cvp->count, cvp->owner->next_count);
-	}
+void
+cond_wait (condvar_t *cvp) {
+	//LAB7 EXERCISE1: 2012010449
+	cprintf("cond_wait begin:  cvp %x, cvp->count %d, cvp->owner->next_count %d\n", cvp, cvp->count, cvp->owner->next_count);
+	monitor_t* mt = cvp->owner;
+	cvp->count ++;
+	if(mt->next_count > 0)
+		up(&(mt->next));
+	else
+		up(&(mt->mutex));
+	down(&(cvp->sem));
+	cvp->count --;
+	cprintf("cond_wait end:  cvp %x, cvp->count %d, cvp->owner->next_count %d\n", cvp, cvp->count, cvp->owner->next_count);
+}

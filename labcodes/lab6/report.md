@@ -11,15 +11,17 @@ Additional initialization is required in ```alloc_proc``` of ```proc.c```
     proc->lab6_priority = 0;
 ```
 
-Furthermore in ```trap.c``` during timer interrupt, the ```sched_class_proc_tick``` function should be called. This means that the corresponding function in ```sched.c``` should be set to global
+Furthermore in ```trap.c``` during timer interrupt, the ```sched_class_proc_tick``` function should be called. 
+```
+	extern void sched_class_proc_tick(struct proc_struct *);
+	sched_class_proc_tick(current);
+```
+This means that the corresponding function in ```sched.c``` should be set to global
 ```
 	/* static */ void
 	sched_class_proc_tick(struct proc_struct *proc)
 ```
-and the corresponding declaration added in ```sched.h```
-```
-	void sched_class_proc_tick(struct proc_struct *proc);
-```
+
 
 # Task 1
 1. In sched_class
@@ -55,10 +57,10 @@ To enqueue or dequeue a new element insert the following code to ```stride_enque
 ```
 To pick the next process to run, use the following code in ```stride_pick_next```
 ```
+	if (rq->lab6_run_pool == NULL)
+		return NULL;
     struct proc_struct *next_proc = le2proc(rq->lab6_run_pool, lab6_run_pool);
-	if (next_proc != NULL) {
-		next_proc->lab6_stride += next_proc->lab6_priority == 0 ? BIG_STRIDE : BIG_STRIDE / next_proc->lab6_priority;
-	}
+	next_proc->lab6_stride += next_proc->lab6_priority == 0 ? BIG_STRIDE : BIG_STRIDE / next_proc->lab6_priority;	
 	return next_proc;
 ```
 And finally in ```stride_proc_tick```	
