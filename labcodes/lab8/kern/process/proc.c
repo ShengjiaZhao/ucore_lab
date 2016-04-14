@@ -1029,7 +1029,7 @@ init_main(void *arg) {
     }
 
 	extern void check_sync(void);
-    //check_sync();                // check philosopher sync problem
+    check_sync();                // check philosopher sync problem
 
     while (do_wait(0, NULL) == 0) {
         schedule();

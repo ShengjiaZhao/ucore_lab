@@ -119,7 +119,6 @@ void phi_test_condvar (i) {
 
 
 void phi_take_forks_condvar(int i) {
-     down(&(mtp->mutex));
 //--------into routine in monitor--------------
      // LAB7 EXERCISE1: 2012010449
 	 down(&(mtp->mutex));
@@ -135,8 +134,6 @@ void phi_take_forks_condvar(int i) {
 }
 
 void phi_put_forks_condvar(int i) {
-     down(&(mtp->mutex));
-
 //--------into routine in monitor--------------
      // LAB7 EXERCISE1: 2012010449
 	 down(&(mtp->mutex));
